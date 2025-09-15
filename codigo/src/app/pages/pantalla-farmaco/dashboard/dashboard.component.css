@@ -1,0 +1,59 @@
+.app-wrapper {
+  min-height: 84.7vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.main-content {
+  flex: 1;
+  display: flex;
+  justify-content: center;  /* Centra horizontal */
+  align-items: center;      /* Centra vertical */
+  background-color: #f4f4f4;
+  padding: 20px;
+}
+
+.card-title, .card-content {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
+
+.card-content {
+  word-break: break-word;
+  font-size: 1rem; /* Ajusta según necesidad */
+}
+/* Altura igual al botón y sin espacio inferior del subscript */
+:host ::ng-deep .search-field .mat-mdc-text-field-wrapper {
+  height: 52px;
+  align-items: center;
+}
+
+:host ::ng-deep .search-field .mat-mdc-form-field-flex {
+  align-items: center;
+}
+
+:host ::ng-deep .search-field .mat-mdc-form-field-subscript-wrapper {
+  display: none;   /* quita el espacio bajo el campo */
+  height: 0;
+  margin: 0;
+}
+
+:host ::ng-deep .search-field .mdc-notched-outline {
+  height: 100%;
+}
+
+
+/* ...existing code... */
+.catalogo-wrapper {
+  position: relative;
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.catalogo-contenido {
+  flex: 1 1 auto;
+}
+

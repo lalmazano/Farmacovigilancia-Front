@@ -1,0 +1,31 @@
+
+<div class="cg-grid" [ngStyle]="gridStyle">
+  <ng-container *ngFor="let item of items">
+    <a
+      *ngIf="item.routerLink; else externalLink"
+      class="cg-card"
+      [class.cg-disabled]="item.disabled"
+      [routerLink]="item.routerLink"
+      (click)="onCardClick(item, $event)"
+      style="text-decoration: none; color: inherit;"
+      [attr.aria-disabled]="item.disabled ? 'true' : null">
+      <img class="cg-img" [src]="item.imgSrc" [alt]="item.imgAlt || item.title" />
+      <h2 class="cg-title">{{ item.title }}</h2>
+    </a>
+
+    <ng-template #externalLink>
+      <a
+        class="cg-card"
+        [class.cg-disabled]="item.disabled"
+        [href]="item.href"
+        [target]="item.target || '_self'"
+        rel="noopener"
+        (click)="onCardClick(item, $event)"
+        style="text-decoration: none; color: inherit;"
+        [attr.aria-disabled]="item.disabled ? 'true' : null">
+        <img class="cg-img" [src]="item.imgSrc" [alt]="item.imgAlt || item.title" />
+        <h2 class="cg-title">{{ item.title }}</h2>
+      </a>
+    </ng-template>
+  </ng-container>
+</div>

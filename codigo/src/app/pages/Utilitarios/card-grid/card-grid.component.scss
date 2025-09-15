@@ -1,0 +1,65 @@
+:host {
+  display: block;
+  width: 100%;
+}
+
+/* === Equivalente a tu .card-grid === */
+.cg-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(var(--cg-min, 220px), 1fr));
+  gap: var(--cg-gap, 20px);
+  width: 100%;
+  max-width: 900px;   /* mismo límite */
+  margin: 0 auto;     /* centrado horizontal del bloque */
+}
+
+/* === Equivalente a tu .card === */
+.cg-card {
+  background-color: #d4edda;
+  border: 1px solid #c3e6cb;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  padding: 20px;
+  text-align: center;
+  transition: transform 0.2s;
+  user-select: none;
+  height: 184px; 
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.cg-card:hover {
+  transform: translateY(-5px);
+}
+
+/* === Equivalente a tu .card img === */
+.cg-img {
+  width: 80px;
+  height: 80px;
+  margin-bottom: 15px;
+  object-fit: contain;
+}
+
+.cg-title {
+  margin: 0;
+  font-weight: 500;
+  font-size: 1.4rem; /* tamaño base */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 3; /* máximo 3 líneas */
+  line-clamp: 3; /* estándar para compatibilidad */
+  -webkit-box-orient: vertical;
+  max-width: 100%;
+  word-break: break-word;
+  transition: font-size 0.2s;
+}
+
+
+@media (max-width: 300px) {
+  .cg-title {
+    font-size: 1rem;
+  }
+}
+

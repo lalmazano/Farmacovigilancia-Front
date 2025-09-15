@@ -1,0 +1,18 @@
+.mat-mdc-card {
+    border-radius: 0;
+}
+
+.igss-img{
+    width: 150px;
+    padding: 6px;
+}
+
+.mat-mdc-card.light-theme {
+    background: #f4f8e7 !important;
+}
+
+.no-select {
+  user-select: none;
+}
+
+

@@ -1,0 +1,43 @@
+<app-title [title]="'Modificación de Usuarios'"></app-title>
+
+<mat-dialog-content>
+  <div style="display: flex; flex-direction: column; align-items: center; gap: 16px;">
+    <mat-form-field appearance="outline" style="width: 300px;">
+      <mat-label>Nombre</mat-label>
+      <input matInput [(ngModel)]="data.nombre" required>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" style="width: 300px;">
+      <mat-label>Apellido</mat-label>
+      <input matInput [(ngModel)]="data.apellido" required>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" style="width: 300px;">
+      <mat-label>Correo Electrónico</mat-label>
+      <input matInput [(ngModel)]="data.email" required>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" style="width: 300px;">
+      <mat-label>Nombre de Usuario</mat-label>
+      <input matInput [(ngModel)]="data.username" required>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" style="width: 300px;">
+      <mat-label>Contraseña</mat-label>
+      <input matInput type="password" [(ngModel)]="data.password" required>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" style="width: 300px;">
+      <mat-label>Estado</mat-label>
+      <mat-select [(ngModel)]="data.estado">
+        <mat-option value="A">Activo</mat-option>
+        <mat-option value="I">Inactivo</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-raised-button color="primary" (click)="guardar()">Guardar</button>
+  <button mat-button (click)="dialogRef.close()">Cancelar</button>
+</mat-dialog-actions>

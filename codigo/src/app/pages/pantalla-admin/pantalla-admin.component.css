@@ -1,0 +1,19 @@
+.app-wrapper {
+  min-height: 84.7vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.main-content {
+  flex: 1;
+  display: flex;
+  justify-content: center;  /* Centra horizontal */
+  align-items: center;      /* Centra vertical */
+  background-color: #f4f4f4;
+  padding: 20px;
+}
+
+
+
+
+

@@ -1,0 +1,28 @@
+<app-title [title]="'Modificación de Roles'"></app-title>
+
+<mat-dialog-content>
+  <div style="display: flex; flex-direction: column; align-items: center; gap: 16px;">
+    <mat-form-field appearance="outline" style="width: 300px;">
+      <mat-label>Nombre</mat-label>
+      <input matInput [(ngModel)]="data.name" required>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" style="width: 300px;">
+      <mat-label>Descripción</mat-label>
+      <textarea matInput [(ngModel)]="data.description" required rows="4"></textarea>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" style="width: 300px;">
+      <mat-label>Estado</mat-label>
+      <mat-select [(ngModel)]="data.estado">
+        <mat-option value="A">Activo</mat-option>
+        <mat-option value="I">Inactivo</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-raised-button color="primary" (click)="guardar()">Guardar</button>
+  <button mat-button (click)="dialogRef.close()">Cancelar</button>
+</mat-dialog-actions>

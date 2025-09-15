@@ -1,0 +1,41 @@
+.minWithd{
+    min-width: 80px;
+}
+.mmaxWithd{
+    max-width: 150px;
+}
+.resaltados{
+    font-size: 17px;
+    font-weight: bolder;
+}
+.white-icon{
+    color: white;
+}
+
+.my-fab{
+    width: 28px;
+    height: 28px;
+    margin-right: 5px; 
+}
+.textMiniIcon{
+    margin-top: 7px;
+    font-size: 18px;
+    /* margin-left: 1px; */
+}
+
+.warning-chip{
+    background-color: rgba(252, 249, 53, 0.908) !important;
+    color: black !important;
+}
+
+.TextoPeque{
+    font-size: small;
+}
+
+.color-redis {
+    background-color: orange;
+}
+
+.amarillo{
+    background-color:#ffc107
+}

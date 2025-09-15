@@ -1,0 +1,7 @@
+
+services:
+  api:
+    image: inventary-front_img:latest
+    restart: always
+    ports:
+      - "8080:443"

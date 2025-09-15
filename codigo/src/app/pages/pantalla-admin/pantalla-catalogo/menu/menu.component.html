@@ -1,0 +1,18 @@
+<div class="app-wrapper">
+  <app-title [title]="'Administración del Sistema'" [icon]="'admin_panel_settings'"></app-title>
+
+  <div class="main-content">
+    <app-card-grid
+      [items]="items"
+      [minCardWidth]="280"
+      [gap]="20"
+      [imgMaxHeight]="90">
+    </app-card-grid>
+  </div>
+  <div class="btn-regresar-flotante">
+    <button mat-raised-button color="accent" (click)="regresar()">
+      <mat-icon>arrow_back</mat-icon>
+      Regresar
+    </button>
+  </div>
+</div>

@@ -1,0 +1,64 @@
+<mat-drawer-container class="full-height no-select">
+  <div class="container-fluid full-height" style="padding: 0; overflow: hidden;">
+    <div class="row full-height" style="overflow: hidden;">
+      @if (!(isHandset$ | async)) {
+        <div class="col-lg-9 futext-center">
+          <div style="display: table;" class="full-width full-height">
+            <div style="display: table-cell; vertical-align:middle;">
+              <app-pantalla-efectoadverso></app-pantalla-efectoadverso>
+              
+            </div>
+          </div>
+        </div>
+      }
+      <div class="col-lg-3 full-height full-width">
+        <mat-card appearance="outlined" class="full-height full-width">
+          <mat-card-content class="full-height full-width">
+            <div style="display: table;" class="full-width full-height">
+              <div style="display: table-cell; vertical-align:middle;">
+                <div class="text-center">
+                  <img class="igss-img" src="../assets/logo_igss.png">
+                  <p></p>
+                  <mat-divider></mat-divider>
+                  <p></p>
+                  @if ((isHandset$ | async)) {
+                    <p>Sistema de Inventario  del Area de Arquitectura de Software</p>
+                  }
+                  <form [formGroup]="formLogin" (ngSubmit)="iniciarSesion()">
+                    <mat-form-field appearance="outline" class="full-width">
+                      <mat-label>Usuario</mat-label>
+                      <input matInput formControlName="username" placeholder="Placeholder">
+                      <mat-icon matSuffix>person</mat-icon>
+                    </mat-form-field>
+                    <mat-form-field appearance="outline" class="full-width">
+                      <mat-label>Contraseña</mat-label>
+                      <input matInput formControlName="password"
+                        [type]="hide_password ? 'password' : 'text'">
+                        <button mat-icon-button matSuffix (click)="hide_password = !hide_password"
+                          [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide_password">
+                          <mat-icon>{{hide_password ? 'visibility_off' : 'visibility'}}</mat-icon>
+                        </button>
+                      </mat-form-field>
+                      @if (errorText != '') {
+                        <div style="margin-bottom: 10px;"
+                        class="alert alert-danger mt-3 mb-0">{{errorText}}</div>
+                      }
+
+                      <button style="margin-top: 10px; " type="submit" [disabled]="!formLogin.valid"
+                        mat-stroked-button color="accent" class="full-width"
+                        >
+                        <mat-icon>login</mat-icon>
+                        <span> &nbsp; Iniciar Sesión</span>
+                      </button>
+                      <p></p>
+                        <p><small>Versión 1.0 19.03.2025 </small></p>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </mat-card-content>
+            </mat-card>
+          </div>
+        </div>
+      </div>
+    </mat-drawer-container>

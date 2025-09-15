@@ -1,0 +1,68 @@
+<div class="wrapper">
+  @if (isLoading) {
+    <div class="overlay">
+      <div class="spinner-wrapper">
+        <app-spinner></app-spinner>
+      </div>
+    </div>
+  }
+  <mat-sidenav-container class="sidenav-container">
+    <mat-sidenav #drawer class="sidenav" fixedInViewport [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
+      [mode]="(isHandset$ | async) ? 'over' : 'side'" [opened]="(isHandset$ | async) === false">
+      <div class="nav-container" style="width: 100%; display: flex; ">
+        <div class="text-center">
+          <p></p>
+          <img class="igss-img" src="../assets/logo_igss.png">
+          <p></p>
+          <mat-divider></mat-divider>
+          <p></p>
+          
+        </div>
+
+        <mat-nav-list style="flex-grow: 1;">
+          @for (item of nav_list; track item) {
+            <a mat-list-item [routerLink]="['/home' + item.urn]">
+              @if (item.icon != '') {
+                <mat-icon color="accent" style="margin-right: 8px;">{{ item.icon }}</mat-icon>
+              }
+              {{ item.description }}
+            </a>
+          }
+        </mat-nav-list>
+        <mat-nav-list>
+          <mat-list-item (click)="toogleTheme()">
+            <mat-icon mat-list-icon>{{ dark_theme ? 'light_mode' : 'dark_mode' }}</mat-icon>
+            <span> &nbsp; Tema</span>
+          </mat-list-item>
+
+          <mat-list-item (click)="cerrarSesion()">
+            <mat-icon mat-list-icon>logout</mat-icon>
+            <span> &nbsp; Salir</span>
+          </mat-list-item>
+
+        </mat-nav-list>
+      </div>
+
+    </mat-sidenav>
+    <mat-sidenav-content style="overflow:hidden;">
+      <mat-toolbar color="primary" style="height: 10%;">
+        <button type="button" aria-label="Toggle sidenav" mat-icon-button (click)="drawer.toggle()">
+          <mat-icon aria-label="Side nav toggle icon"> {{ drawer.opened ? 'menu_open' : 'menu'}} </mat-icon>
+        </button>
+        <span class="spacer"></span>
+        <button mat-button class="full-height">
+          <mat-icon>person</mat-icon>
+          <span style="font-size: medium;">
+            {{user.nombre}}
+          </span>
+        </button>
+      </mat-toolbar>
+
+      <mat-card appearance="outlined" class="holder" style="overflow: auto;">
+
+        <router-outlet></router-outlet>
+      </mat-card>
+
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+</div>

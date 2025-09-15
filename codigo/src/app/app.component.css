@@ -1,0 +1,23 @@
+.headers-align .mat-expansion-panel-header-description {
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .mat-expansion-panel-header,
+  .mat-expansion-panel-header.mat-expanded:hover {
+    background: #45a7d0 !important;
+  }
+
+  .mat-expansion-panel-header {
+    color: white !important;
+  }
+
+  .mat-expansion-panel-header[aria-disabled=true] {
+    background: gray !important;
+    cursor: default;
+  }
+
+  /* TODO(mdc-migration): The following rule targets internal classes of checkbox that may no longer apply for the MDC version. */
+  .mat-checkbox-layout .mat-checkbox-label{
+    line-height: 1 !important;
+}

@@ -1,0 +1,20 @@
+.title-container {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding-left: 16px;
+}
+
+mat-icon {
+    font-size: 24px;
+    height: 24px;
+    width: 24px;
+    margin-right: 4px;
+}
+
+.title-text {
+    font-size: 20px;
+    font-weight: 500;
+    margin: 0;
+    line-height: 24px;
+}

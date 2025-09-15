@@ -1,0 +1,166 @@
+<mat-toolbar class="app-toolbar">
+  <span class="toolbar-title">Sistema de Gestión Hospitalaria</span>
+  <span class="spacer"></span>
+</mat-toolbar>
+<div class="content">
+  <div class="left-panel">
+    <mat-card class="small-card">
+      <mat-card-header>
+        <mat-card-title>Crear Paciente Nuevo</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <form [formGroup]="nuevoPacienteForm" (ngSubmit)="crearPaciente()">
+          <div class="form-container">
+            <div class="form-column">
+              <mat-form-field class="full-width" appearance="outline">
+                <mat-label>DPI</mat-label>
+                <input matInput formControlName="id_paciente" required>
+              </mat-form-field>
+
+              <mat-form-field class="full-width" appearance="outline">
+                <mat-label>Nombre</mat-label>
+                <input matInput formControlName="nombre" required>
+              </mat-form-field>
+            </div>
+            <div class="form-column">
+              <mat-form-field class="full-width" appearance="outline">
+                <mat-label>Fecha de Nacimiento</mat-label>
+                <input matInput [matDatepicker]="picker" formControlName="fecha_nacimiento" required>
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+              </mat-form-field>
+
+              <mat-form-field class="full-width" appearance="outline">
+                <mat-label>Género</mat-label>
+                <mat-select formControlName="genero" required>
+                  <mat-option value="M">Masculino</mat-option>
+                  <mat-option value="F">Femenino</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div class="form-column">
+              <mat-form-field class="full-width" appearance="outline">
+                <mat-label>Contacto</mat-label>
+                <input matInput formControlName="contacto" required>
+              </mat-form-field>
+
+              <button mat-raised-button color="primary" type="submit" [disabled]="!nuevoPacienteForm.valid"
+                class="full-width">Crear</button>
+            </div>
+          </div>
+        </form>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>Listado de Pacientes</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <table mat-table [dataSource]="pacientes" class="mat-elevation-z8">
+
+          <!-- ID Column -->
+          <ng-container matColumnDef="id">
+            <th mat-header-cell *matHeaderCellDef class="header-cell"> ID </th>
+            <td mat-cell *matCellDef="let element"> {{element.idPaciente}} </td>
+          </ng-container>
+
+          <!-- Nombre Column -->
+          <ng-container matColumnDef="nombre">
+            <th mat-header-cell *matHeaderCellDef class="header-cell"> Nombre </th>
+            <td mat-cell *matCellDef="let element"> {{element.nombre}} </td>
+          </ng-container>
+
+          <!-- Contacto Column -->
+          <ng-container matColumnDef="contacto">
+            <th mat-header-cell *matHeaderCellDef class="header-cell"> Contacto </th>
+            <td mat-cell *matCellDef="let element"> {{element.contacto}} </td>
+          </ng-container>
+
+          <!-- Recetas Column -->
+          <ng-container matColumnDef="recetas">
+            <th mat-header-cell *matHeaderCellDef class="header-cell"> Recetas </th>
+            <td mat-cell *matCellDef="let element">
+              <div (click)="$event.stopPropagation()">
+               <!-- <button mat-icon-button color="basic" (click)="verRecetas(element)">
+                  <mat-icon>visibility</mat-icon>
+                </button>
+                <button mat-icon-button color="basic" (click)="addReceta(element)">
+                  <mat-icon>add</mat-icon>
+                </button>-->
+              </div>
+            </td>
+          </ng-container>
+
+          <!-- Historial Médico Column -->
+          <ng-container matColumnDef="historial">
+            <th mat-header-cell *matHeaderCellDef class="header-cell"> Historial Médico </th>
+            <td mat-cell *matCellDef="let element">
+              <div (click)="$event.stopPropagation()">
+               <!-- <button mat-icon-button color="basic" (click)="verHistorial(element)">
+                  <mat-icon>visibility</mat-icon>
+                </button>
+                <button mat-icon-button color="basic" (click)="addHistorial(element)">
+                  <mat-icon>add</mat-icon>
+                </button> -->
+              </div>
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumnsPacientes" class="header-row"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumnsPacientes;" class="paciente-row"></tr>
+          <!-- <tr mat-row *matRowDef="let row; columns: displayedColumnsPacientes;" class="paciente-row"
+            (click)="openPacienteDialog(row)"></tr> -->
+        </table>
+        <mat-paginator [pageSize]="4" #paginatorPacientes></mat-paginator>
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+  <div class="right-panel">
+    <mat-card>
+      <mat-card-header class="header-with-search">
+        <mat-card-title>Listado de Registros Adversos</mat-card-title>
+        <span class="spacer"></span>
+        <mat-form-field appearance="outline" class="filter-field">
+          <mat-label>Buscar</mat-label>
+          <input matInput (keyup)="applyFilter($event)" placeholder="Filtrar registros">
+        </mat-form-field>
+      </mat-card-header>
+      <mat-card-content>
+        <table mat-table [dataSource]="efectosAdversos" class="mat-elevation-z8">
+
+          <!-- Nombre Paciente Column -->
+          <ng-container matColumnDef="nombre_paciente">
+            <th mat-header-cell *matHeaderCellDef class="header-cell"> Nombre Paciente </th>
+            <td mat-cell *matCellDef="let element"> {{element.idPacienteNavigation?.nombre}} </td>
+          </ng-container>
+
+          <!-- Nombre Medicamento Column -->
+          <ng-container matColumnDef="nombre_medicamento">
+            <th mat-header-cell *matHeaderCellDef class="header-cell"> Nombre Medicamento </th>
+            <td mat-cell *matCellDef="let element"> {{element.idMedicamentoNavigation?.nombre}} </td>
+          </ng-container>
+
+          <!-- Fecha Reporte Column -->
+          <ng-container matColumnDef="fecha_reporte">
+            <th mat-header-cell *matHeaderCellDef class="header-cell"> Fecha Reporte </th>
+            <td mat-cell *matCellDef="let element"> {{element.fechaReporte | date:'dd/MM/yyyy'}} </td>
+          </ng-container>
+
+          <!-- Descripción Column -->
+          <ng-container matColumnDef="descripcion">
+            <th mat-header-cell *matHeaderCellDef class="header-cell"> Descripción </th>
+            <td mat-cell *matCellDef="let element"> {{element.descripcion}} </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumnsEfectos" class="header-row"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumnsEfectos;" class="efecto-row"></tr>
+          <!-- <tr mat-row *matRowDef="let row; columns: displayedColumnsEfectos;" class="efecto-row"
+            (click)="openEfectoAdversoDialog(row)"></tr>-->
+        </table>
+        <mat-paginator [pageSize]="9" #paginatorEfectos></mat-paginator>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

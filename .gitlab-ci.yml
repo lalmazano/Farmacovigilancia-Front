@@ -1,0 +1,46 @@
+stages:
+  - build
+  - publish
+
+.template_build:
+  stage: build
+  script:
+    - cd /opt/src_wiki/srv-inventory-frontend
+#    - rm produccion.key
+#    - rm star_igssgt_org.crt
+    - curl -O https://fileservice.igssgt.org/produccion.key
+    - curl -O https://fileservice.igssgt.org/star_igssgt_org.crt
+    - git checkout develop
+    - git pull 
+    - docker build -t inventary-front_img .
+    - echo "Se construyo la imagen correctamente"
+  only:
+    - "develop"
+  tags:
+    - "$CI_JOB_TAG"
+
+.template_publish:
+  stage: publish
+  script:
+    - cd /opt/src_wiki/srv-inventory-frontend
+    - docker compose down || true
+    - docker compose up -d 
+    - echo "Se levantaron los contenedores correctamente"
+    - docker image prune -a -f
+    - docker builder prune -f
+  only:
+    - "develop"
+  tags:
+    - "$CI_JOB_TAG"
+
+
+
+build_frontend:
+  extends: .template_build
+  variables:
+    CI_JOB_TAG: "l-dev24"
+
+publish_frontend:
+  extends: .template_publish
+  variables:
+    CI_JOB_TAG: "l-dev24"

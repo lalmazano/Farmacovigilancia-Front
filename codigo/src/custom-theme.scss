@@ -1,0 +1,114 @@
+
+@use '@angular/material' as mat;
+
+// TODO(v15): As of v15 mat.legacy-core no longer includes default typography styles.
+//  The following line adds:
+//    1. Default typography styles for all components
+//    2. Styles for typography hierarchy classes (e.g. .mat-headline-1)
+//  If you specify typography styles for the components you use elsewhere, you should delete this line.
+//  If you don't need the default component typographies but still want the hierarchy styles,
+//  you can delete this line and instead use:
+//    `@include mat.legacy-typography-hierarchy(mat.define-typography-config());`
+@include mat.all-component-typographies();
+@include mat.core();
+
+$md-blue-igss: (
+    50 : #e1f3f8,
+    100 : #b3dfee,
+    200 : #84cae3,
+    300 : #5cb6d7,
+    400 : #45a7d0,
+    500 : #3499c9,
+    600 : #2e8cbb,
+    700 : #267aa9,
+    800 : #236995,
+    900 : #194b73,
+    A100 : #9acbff,
+    A200 : #67b0ff,
+    A400 : #3496ff,
+    A700 : #1a89ff,
+    contrast: (
+        50 : #000000,
+        100 : #000000,
+        200 : #000000,
+        300 : #000000,
+        400 : #ffffff,
+        500 : #ffffff,
+        600 : #ffffff,
+        700 : #ffffff,
+        800 : #ffffff,
+        900 : #ffffff,
+        A100 : #000000,
+        A200 : #000000,
+        A400 : #000000,
+        A700 : #ffffff,
+    )
+);
+
+$md-green-igss: (
+    50 : #f4f8e7,
+    100 : #e3edc4,
+    200 : #d0e19e,
+    300 : #bdd576,
+    400 : #adcc56,
+    500 : #9fc336,
+    600 : #8eb32e,
+    700 : #79a023,
+    800 : #648c1a,
+    900 : #3f6b04,
+    A100 : #c7ff8f,
+    A200 : #adff5c,
+    A400 : #94ff29,
+    A700 : #87ff0f,
+    contrast: (
+        50 : #000000,
+        100 : #000000,
+        200 : #000000,
+        300 : #000000,
+        400 : #000000,
+        500 : #ffffff,
+        600 : #ffffff,
+        700 : #ffffff,
+        800 : #ffffff,
+        900 : #ffffff,
+        A100 : #000000,
+        A200 : #000000,
+        A400 : #000000,
+        A700 : #000000,
+    )
+);
+
+
+$presentacion-primary: mat.define-palette($md-blue-igss);
+$presentacion-accent: mat.define-palette($md-green-igss);
+
+$presentacion-warn: mat.define-palette(mat.$deep-orange-palette);
+
+$presentacion-typography: mat.define-typography-config(
+  $font-family: "Quicksand",
+);
+
+$presentacion-theme-light: mat.define-light-theme((
+  color: (
+    primary: $presentacion-primary,
+    accent: $presentacion-accent,
+    warn: $presentacion-warn,
+  ),
+  typography: $presentacion-typography,
+));
+
+$presentacion-theme-dark: mat.define-dark-theme((
+  color: (
+    primary: $presentacion-primary,
+    accent: $presentacion-accent,
+    warn: $presentacion-warn,
+  ),
+  typography: $presentacion-typography,
+));
+
+@include mat.all-component-themes($presentacion-theme-light);
+
+.dark-theme{
+  @include mat.all-component-colors($presentacion-theme-dark);
+}
+
