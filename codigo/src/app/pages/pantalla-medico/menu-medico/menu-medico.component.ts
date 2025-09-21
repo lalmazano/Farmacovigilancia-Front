@@ -12,7 +12,7 @@ export class MenuMedicoComponent implements OnInit {
   items: CardGridItem[] = [
     { title: 'Dashboard',  routerLink: ['../dashboard'],  imgSrc: './assets/icons8-website-100.png',   imgAlt: 'dashboard' },
     { title: 'Pacientes',   routerLink: ['../pacientes'],  imgSrc: './assets/icons8-collaboration-100.png', imgAlt: 'medicamentos' },
-    { title: 'efectos-adversos',  routerLink: ['../dashboard'],  imgSrc: './assets/icons8-website-100.png',   imgAlt: 'dashboard' },
+    { title: 'Efectos Adversos',  routerLink: ['../efectos'],  imgSrc: './assets/icons8-website-100.png',   imgAlt: 'dashboard' },
   ];
 
   ngOnInit(): void {
