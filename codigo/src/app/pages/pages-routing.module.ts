@@ -23,6 +23,10 @@ import { MedicoGuard } from '../guards/medico.guard';
 import { MenuFarmacoComponent } from './pantalla-farmaco/menu-farmaco/menu-farmaco.component';
 import { MenuMedicoComponent } from './pantalla-medico/menu-medico/menu-medico.component';
 import { DashboardMedicoComponent } from './pantalla-medico/dashboard/dashboardmedico.component';
+import { MedicamentoComponent } from './pantalla-admin/pantalla-catalogo/medicamento/medicamento.component';
+import { ListarMedicamentoComponent } from './pantalla-admin/pantalla-catalogo/medicamento/listar-medicamento/listar-medicamento.component';
+import { MedicamentoFarmacoComponent } from './pantalla-farmaco/medicamento/medicamento-farmaco.component';
+import { EfectosAdversosFarmacoComponent } from './pantalla-farmaco/efectos-adversos/efectos-adversos.component';
 
 const routes: Routes = [
   {
@@ -72,6 +76,11 @@ const routes: Routes = [
             component: MenuComponent,
             canActivate: [AdminGuard]
           },
+          {
+            path: 'medicamentos',
+            component: MedicamentoComponent,
+            canActivate: [AdminGuard]
+          },
           { path: '', redirectTo: 'menu', pathMatch: 'full' }
         ]
       },
@@ -111,6 +120,17 @@ const routes: Routes = [
             component: DashboardComponent,
             canActivate: [FarmacoGuard],
           },
+          {
+            path: 'medicamentos',
+            component: MedicamentoFarmacoComponent,
+            canActivate: [FarmacoGuard],
+          },
+          {
+            path: 'efectos',
+            component: EfectosAdversosFarmacoComponent,
+            canActivate: [FarmacoGuard],
+          },
+
           { path: '', redirectTo: 'menu', pathMatch: 'full' }, 
         ]
         

@@ -1,0 +1,30 @@
+<app-title [title]="'Modificacion de Medicamentos'"></app-title>
+
+<mat-dialog-content>
+  <div style="display: flex; flex-direction: column; align-items: center; gap: 16px; width: 400px; margin: 0 auto;">
+    <mat-form-field appearance="outline" style="width: 100%;">
+      <mat-label>Nombre</mat-label>
+      <input matInput name="nombre" [(ngModel)]="data.nombre" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" style="width: 100%;">
+      <mat-label>Composición</mat-label>
+      <input matInput name="composicion" [(ngModel)]="data.composicion" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" style="width: 100%;">
+      <mat-label>Indicaciones</mat-label>
+      <textarea matInput name="indicaciones" [(ngModel)]="data.indicaciones"></textarea>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" style="width: 100%;">
+      <mat-label>Contraindicaciones</mat-label>
+      <textarea matInput name="contraindicaciones" [(ngModel)]="data.contraindicaciones"></textarea>
+    </mat-form-field>
+  </div>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-raised-button color="primary" (click)="guardar()">Guardar</button>
+  <button mat-button (click)="dialogRef.close()">Cancelar</button>
+</mat-dialog-actions>

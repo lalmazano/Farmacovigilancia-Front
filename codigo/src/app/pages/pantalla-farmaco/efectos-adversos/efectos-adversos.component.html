@@ -1,0 +1,55 @@
+<app-title [title]="'CATALOGO DE EFECTOS ADVERSOS'"></app-title>
+<mat-card>
+  <mat-card-content>
+    <h2>Listado de Efectos Adversos</h2>
+
+    <div style="height: 52px;"></div>
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+      <button mat-raised-button color="accent"
+              style="width: 180px; height: 52px;"
+              (click)="regresar()">
+        <mat-icon>arrow_back</mat-icon>
+        Regresar
+      </button>
+
+      <div style="display: flex; align-items: center; gap: 16px;">
+        <mat-form-field appearance="outline" class="search-field" style="width: 180px; margin: 0;">
+          <mat-label>Buscar</mat-label>
+          <input matInput (keyup)="applyFilter($event)" placeholder="Buscar efecto adverso..." />
+        </mat-form-field>
+      </div>
+    </div>
+
+    <table mat-table [dataSource]="efectosAdversos" class="mat-elevation-z8">
+
+      <ng-container matColumnDef="id_paciente">
+        <th mat-header-cell *matHeaderCellDef> ID Paciente </th>
+        <td mat-cell *matCellDef="let element"> {{element.idPaciente}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="nombre_paciente">
+        <th mat-header-cell *matHeaderCellDef> Nombre Paciente </th>
+        <td mat-cell *matCellDef="let element"> {{element.idPacienteNavigation?.nombre}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="nombre_medicamento">
+        <th mat-header-cell *matHeaderCellDef> Nombre Medicamento </th>
+        <td mat-cell *matCellDef="let element"> {{element.idMedicamentoNavigation?.nombre}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="fecha_reporte">
+        <th mat-header-cell *matHeaderCellDef> Fecha Reporte </th>
+        <td mat-cell *matCellDef="let element"> {{element.fechaReporte | date:'dd/MM/yyyy'}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="descripcion">
+        <th mat-header-cell *matHeaderCellDef> Descripción </th>
+        <td mat-cell *matCellDef="let element"> {{element.descripcion}} </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+  </mat-card-content>
+</mat-card>
+<mat-paginator [pageSize]="10" [pageSizeOptions]="[10, 25, 50]" showFirstLastButtons></mat-paginator>

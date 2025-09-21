@@ -28,6 +28,13 @@ import { DashboardComponent } from './pantalla-farmaco/dashboard/dashboard.compo
 import { MenuFarmacoComponent } from './pantalla-farmaco/menu-farmaco/menu-farmaco.component';
 import { MenuMedicoComponent } from './pantalla-medico/menu-medico/menu-medico.component';
 import { DashboardMedicoComponent } from './pantalla-medico/dashboard/dashboardmedico.component';
+import { MedicamentoComponent } from './pantalla-admin/pantalla-catalogo/medicamento/medicamento.component';
+import { ListarMedicamentoComponent } from './pantalla-admin/pantalla-catalogo/medicamento/listar-medicamento/listar-medicamento.component';
+import { CrearMedicamentoComponent } from './pantalla-admin/pantalla-catalogo/medicamento/crear-medicamento/crear-medicamento.component';
+import { ModificarMedicamentoComponent } from './pantalla-admin/pantalla-catalogo/medicamento/modificar-medicamento/modificar-medicamento.component';
+import { MedicamentoFarmacoComponent } from './pantalla-farmaco/medicamento/medicamento-farmaco.component';
+import { ListarMedicamentoFarmacoComponent } from './pantalla-farmaco/medicamento/listar-medicamento/listar-medicamento.component';
+import { EfectosAdversosFarmacoComponent } from './pantalla-farmaco/efectos-adversos/efectos-adversos.component';
 
 @NgModule({
   declarations: [
@@ -53,7 +60,14 @@ import { DashboardMedicoComponent } from './pantalla-medico/dashboard/dashboardm
     DashboardComponent,
     DashboardMedicoComponent,
     MenuFarmacoComponent,
-    MenuMedicoComponent
+    MenuMedicoComponent,
+    MedicamentoComponent,
+    ListarMedicamentoComponent,
+    CrearMedicamentoComponent,
+    ModificarMedicamentoComponent,
+    MedicamentoFarmacoComponent,
+    ListarMedicamentoFarmacoComponent,
+    EfectosAdversosFarmacoComponent
 
   ],
 

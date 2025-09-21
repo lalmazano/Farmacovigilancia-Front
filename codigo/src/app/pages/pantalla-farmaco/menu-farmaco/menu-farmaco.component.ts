@@ -11,8 +11,8 @@ export class MenuFarmacoComponent implements OnInit {
   constructor(private location: Location){}
   items: CardGridItem[] = [
     { title: 'Dashboard ',  routerLink: ['../dashboard'],  imgSrc: './assets/icons8-website-100.png',   imgAlt: 'dashboard' },
-    { title: 'Medicamentos',     routerLink: ['..medicamentos'],    imgSrc: './assets/icons8-collaboration-100.png', imgAlt: 'medicamentos' },
-    { title: 'Efectos Adversos',     routerLink: ['..medicamentos'],    imgSrc: './assets/icons8-collaboration-100.png', imgAlt: 'medicamentos' },
+    { title: 'Medicamentos',     routerLink: ['../medicamentos'],    imgSrc: './assets/icons8-collaboration-100.png', imgAlt: 'medicamentos' },
+    { title: 'Efectos Adversos',     routerLink: ['../efectos'],    imgSrc: './assets/icons8-collaboration-100.png', imgAlt: 'medicamentos' },
     
   ];
 

@@ -10,14 +10,15 @@ import { Location } from '@angular/common';
 export class MenuMedicoComponent implements OnInit {
   constructor(private location: Location){}
   items: CardGridItem[] = [
-    { title: 'Dashboard ',  routerLink: ['../dashboard'],  imgSrc: './assets/icons8-website-100.png',   imgAlt: 'dashboard' },
-    { title: 'Pacientes',     routerLink: ['../pacientes'],    imgSrc: './assets/icons8-collaboration-100.png', imgAlt: 'medicamentos' },
-    
+    { title: 'Dashboard',  routerLink: ['../dashboard'],  imgSrc: './assets/icons8-website-100.png',   imgAlt: 'dashboard' },
+    { title: 'Pacientes',   routerLink: ['../pacientes'],  imgSrc: './assets/icons8-collaboration-100.png', imgAlt: 'medicamentos' },
+    { title: 'efectos-adversos',  routerLink: ['../dashboard'],  imgSrc: './assets/icons8-website-100.png',   imgAlt: 'dashboard' },
   ];
 
   ngOnInit(): void {
   }
-regresar(): void {
-  this.location.back();
-}
+
+  regresar(): void {
+    this.location.back();
+  }
 }
