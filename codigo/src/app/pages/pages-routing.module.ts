@@ -28,6 +28,7 @@ import { ListarMedicamentoComponent } from './pantalla-admin/pantalla-catalogo/m
 import { MedicamentoFarmacoComponent } from './pantalla-farmaco/medicamento/medicamento-farmaco.component';
 import { EfectosAdversosFarmacoComponent } from './pantalla-farmaco/efectos-adversos/efectos-adversos.component';
 import { EfectosAdversosMedicoComponent } from './pantalla-medico/efectos-adversos/efectos-adversos.component';
+import { PacientesComponent } from './pantalla-medico/pacientes/pacientes.component';
 
 const routes: Routes = [
   {
@@ -154,7 +155,11 @@ const routes: Routes = [
             component: EfectosAdversosMedicoComponent,
             canActivate: [FarmacoGuard],
           },
-
+                    {
+            path: 'pacientes',
+            component: PacientesComponent,
+            canActivate: [FarmacoGuard],
+          },
           { path: '', redirectTo: 'menu', pathMatch: 'full' },
         ]
       },

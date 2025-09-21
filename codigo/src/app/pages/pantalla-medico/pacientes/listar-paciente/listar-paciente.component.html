@@ -1,1 +1,83 @@
-<p>listar-paciente works!</p>
+<mat-card>
+  <mat-card-content>
+    <h2>Listado de Pacientes</h2>
+
+    <div style="height: 52px;"></div>
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+      <button mat-raised-button color="accent"
+              style="width: 180px; height: 52px;"
+              (click)="regresar()">
+        <mat-icon>arrow_back</mat-icon>
+        Regresar
+      </button>
+
+      <div style="display: flex; align-items: center; gap: 16px;">
+        <mat-form-field appearance="outline" class="search-field" style="width: 180px; margin: 0;">
+          <mat-label>Buscar</mat-label>
+          <input matInput (keyup)="aplicarFiltro($event)" placeholder="Buscar paciente..." />
+        </mat-form-field>
+
+        <button mat-raised-button color="accent"
+                style="width: 180px; height: 52px;"
+                (click)="abrirCreacion()"
+                routerLinkActive="active-button">
+          <mat-icon>add</mat-icon>
+          Crear Paciente
+        </button>
+      </div>
+    </div>
+
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+      <ng-container matColumnDef="DPI">
+        <th mat-header-cell *matHeaderCellDef> DPI </th>
+        <td mat-cell *matCellDef="let paciente"> {{ paciente.dpi }} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="NOMBRE">
+        <th mat-header-cell *matHeaderCellDef> Nombre </th>
+        <td mat-cell *matCellDef="let paciente"> {{ paciente.nombre }} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="FECHA_NACIMIENTO">
+        <th mat-header-cell *matHeaderCellDef> Fecha Nacimiento </th>
+        <td mat-cell *matCellDef="let p">
+          {{ p.fechaNacimiento | date:'dd/MM/yyyy':'UTC' }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="GENERO">
+        <th mat-header-cell *matHeaderCellDef> Género </th>
+        <td mat-cell *matCellDef="let p">
+          {{ p.genero === 'M' ? 'Masculino' : (p.genero === 'F' ? 'Femenino' : 'No especificado') }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="CONTACTO">
+        <th mat-header-cell *matHeaderCellDef> Contacto </th>
+        <td mat-cell *matCellDef="let paciente"> {{ paciente.contacto }} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="FECHA_REGISTRO">
+        <th mat-header-cell *matHeaderCellDef> Fecha Registro </th>
+        <td mat-cell *matCellDef="let paciente"> {{ paciente.fechaRegistro }} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="OPCIONES">
+        <th mat-header-cell *matHeaderCellDef> OPCIONES </th>
+        <td mat-cell *matCellDef="let paciente">
+          <button mat-raised-button style="background-color: #3ca2cc; color: #fff;" (click)="abrirModificacion(paciente)" routerLinkActive="active-button">
+            <mat-icon>edit</mat-icon> Modificar
+          </button>
+          <button mat-raised-button color="warn" (click)="confirmarEliminacion(paciente)" routerLinkActive="active-button" style="margin-left: 8px;">
+            <mat-icon>delete</mat-icon> Eliminar
+          </button>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="columnas"></tr>
+      <tr mat-row *matRowDef="let row; columns: columnas;"></tr>
+    </table>
+  </mat-card-content>
+</mat-card>
+<mat-paginator [pageSize]="10" [pageSizeOptions]="[10, 25, 50]" showFirstLastButtons></mat-paginator>

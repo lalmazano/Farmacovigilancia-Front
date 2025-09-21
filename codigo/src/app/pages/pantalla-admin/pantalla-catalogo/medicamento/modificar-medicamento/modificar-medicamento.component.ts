@@ -14,7 +14,7 @@ export class ModificarMedicamentoComponent implements OnInit {
   constructor(
     public dialogRef: MatDialogRef<ModificarMedicamentoComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
-    private usuariosService: MedicamentoService
+    private servicio: MedicamentoService
   ) {}
 
   ngOnInit(): void {
@@ -29,9 +29,9 @@ guardar(): void {
     contraindicaciones: this.data.contraindicaciones
   };
 
-  console.log('PUT ID:', id, 'DTO:', entidad);
+  //console.log('PUT ID:', id, 'DTO:', entidad);
 
-  this.usuariosService.apiMedicamentoIdPut(id, entidad).subscribe({
+  this.servicio.apiMedicamentoIdPut(id, entidad).subscribe({
     next: () => {
       Swal.fire({
         title: '¡Actualizado!',

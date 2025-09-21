@@ -36,6 +36,10 @@ import { MedicamentoFarmacoComponent } from './pantalla-farmaco/medicamento/medi
 import { ListarMedicamentoFarmacoComponent } from './pantalla-farmaco/medicamento/listar-medicamento/listar-medicamento.component';
 import { EfectosAdversosFarmacoComponent } from './pantalla-farmaco/efectos-adversos/efectos-adversos.component';
 import { EfectosAdversosMedicoComponent } from './pantalla-medico/efectos-adversos/efectos-adversos.component';
+import { PacientesComponent } from './pantalla-medico/pacientes/pacientes.component';
+import { ListarPacienteComponent } from './pantalla-medico/pacientes/listar-paciente/listar-paciente.component';
+import { CrearPacienteComponent } from './pantalla-medico/pacientes/crear-paciente/crear-paciente.component';
+import { ModificarPacienteComponent } from './pantalla-medico/pacientes/modificar-paciente/modificar-paciente.component';
 
 @NgModule({
   declarations: [
@@ -69,7 +73,11 @@ import { EfectosAdversosMedicoComponent } from './pantalla-medico/efectos-advers
     MedicamentoFarmacoComponent,
     ListarMedicamentoFarmacoComponent,
     EfectosAdversosFarmacoComponent,
-    EfectosAdversosMedicoComponent
+    EfectosAdversosMedicoComponent,
+    PacientesComponent,
+    ListarPacienteComponent,
+    CrearPacienteComponent,
+    ModificarPacienteComponent
 
   ],
 

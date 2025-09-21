@@ -16,6 +16,7 @@ import { Recetum } from './recetum';
 
 export interface Paciente { 
     idPaciente?: number;
+    dpi?: number;
     nombre?: string | null;
     fechaNacimiento?: string;
     genero?: string | null;
