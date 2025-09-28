@@ -6,9 +6,10 @@ import {
 import { HttpClient } from '@angular/common/http';
 import { Medicamento, MedicamentoService } from 'src/app/services/api';
 import { EfectoAdversoService } from 'src/app/services/api/open-services/efectoAdverso.service';
-import { EfectoAdverso } from 'src/app/services/api/model/efectoAdverso';
 import { MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 import { CrearEfectoAdversoPayload } from './../../../services/api/model/CrearEfectoAdversoPayload';
+import Swal from 'sweetalert2';
+
 export const ES_DDMMYYYY = {
   parse: { dateInput: 'DD/MM/YYYY' },
   display: {
@@ -30,13 +31,12 @@ export const ES_DDMMYYYY = {
 })
 export class IngresoEfectoadversoComponent implements OnInit {
   isLinear = true;
-  
+
   medicamentos: Medicamento[] = [];
   patientInfoForm!: FormGroup;
   medicationInfoForm!: FormGroup;
   adverseEffectInfoForm!: FormGroup;
   trackMed = (_: number, m: Medicamento) => m.idMedicamento ?? _;
-  
 
   // Límites de calendario
   today = this.startOfDay(new Date());
@@ -49,8 +49,15 @@ export class IngresoEfectoadversoComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    // === Paso 1: ahora usa DPI (13 dígitos), no id_paciente ===
     this.patientInfoForm = this.fb.group({
-      id_paciente: [null, [Validators.required, Validators.min(1)]],
+      dpi: [
+        '',
+        [
+          Validators.required,
+          Validators.pattern(/^\d{13}$/), // exactamente 13 dígitos
+        ],
+      ],
     });
 
     this.medicationInfoForm = this.fb.group({
@@ -120,7 +127,7 @@ export class IngresoEfectoadversoComponent implements OnInit {
 
       // limpiar error previo
       if (bCtrl?.hasError(errorKey)) {
-        const { [errorKey]: _, ...rest } = bCtrl.errors || {};
+        const { [errorKey]: _, ...rest } = (bCtrl.errors || {}) as any;
         bCtrl.setErrors(Object.keys(rest).length ? rest : null);
       }
       if (optionalB && !b) return null;
@@ -134,21 +141,20 @@ export class IngresoEfectoadversoComponent implements OnInit {
   }
 
   // ---------- CARGA DE DATOS ----------
-private loadMedicamentos(): void {
-  this.medicamentoService.apiMedicamentoGet().subscribe({
-    next: (data: Medicamento[]) => {
-      this.medicamentos = data ?? [];
+  private loadMedicamentos(): void {
+    this.medicamentoService.apiMedicamentoGet().subscribe({
+      next: (data: Medicamento[]) => {
+        this.medicamentos = data ?? [];
 
-      // opcional: preseleccionar el primero para evitar NaN
-      const ctrl = this.medicationInfoForm.get('id_medicamento');
-      if (this.medicamentos.length && !ctrl?.value) {
-        ctrl?.setValue(this.medicamentos[0].idMedicamento);
-      }
-    },
-    error: err => console.error('Error al cargar medicamentos:', err)
-  });
-}
-
+        // opcional: preseleccionar el primero para evitar NaN
+        const ctrl = this.medicationInfoForm.get('id_medicamento');
+        if (this.medicamentos.length && !ctrl?.value) {
+          ctrl?.setValue(this.medicamentos[0].idMedicamento);
+        }
+      },
+      error: err => console.error('Error al cargar medicamentos:', err)
+    });
+  }
 
   // ---------- GETTERS PARA MIN EN PLANTILLA ----------
   get minFinEfecto(): Date | null {
@@ -177,64 +183,153 @@ private loadMedicamentos(): void {
     return 'Sin detalle';
   }
 
-  // ---------- SUBMIT ----------
-async submitEffect(): Promise<void> {
-  this.patientInfoForm.markAllAsTouched();
-  this.medicationInfoForm.markAllAsTouched();
-  this.adverseEffectInfoForm.markAllAsTouched();
-
-  if (this.patientInfoForm.invalid || this.medicationInfoForm.invalid || this.adverseEffectInfoForm.invalid) {
-    alert('Por favor, completa todos los campos requeridos.');
-    return;
-  }
-
-  const f1 = this.patientInfoForm.value;
-  const f2 = this.medicationInfoForm.value;
-  const f3 = this.adverseEffectInfoForm.value;
-
-  const idPaciente = Number(f1.id_paciente);
-  const idMedicamento = Number(this.medicationInfoForm.value.id_medicamento);
-  if (!Number.isFinite(idMedicamento)) {
-    alert('Selecciona un medicamento válido.');
-    return;
-  }
-
-  const payload: CrearEfectoAdversoPayload = {
-    idPaciente,
-    idMedicamento,
-    fechaReporte: this.toISOReq(f3.fecha_reporte),
-    descripcion: (f3.descripcion ?? '').trim(),
-    gravedad: f3.gravedad ?? null,
-    lote: (f2.lote ?? '').trim(),
-    laboratorio: (f2.laboratorio ?? '').trim(),
-    registroSanitario: (f2.registro_sanitario ?? '').trim() || null,
-    fechaVencimiento: this.toISOReq(f2.fecha_vencimiento),
-    dosis: (f2.dosis ?? '').trim() || null,
-    fechaInicioEfecto: this.toISOOpt(f3.fecha_inicio_efecto),
-    fechaFinEfecto: this.toISOOpt(f3.fecha_fin_efecto),
-    viaAdministracion: f2.via_administracion || null,
-    medidasTomadas: (f3.medidas_tomadas ?? '').trim() || null,
-    suspension: this.toCharBool(f3.suspension),   // "S" | "N"
-    fechaSuspension: this.toISOOpt(f3.fecha_suspension),
-    ajusteDosis: this.toCharBool(f3.ajuste_dosis),// "S" | "N"
-    dosisActual: (f3.dosis_actual ?? '').trim() || null
-  };
-
-  console.log('Payload PLANO que se enviará:', payload);
-
-  // ✅ Enviar PLANO, sin wrapper
-  this.efectoAdversoService.apiEfectoAdversoPost(payload as any).subscribe({
-    next: () => {
-      alert('Efecto adverso registrado exitosamente');
-      this.patientInfoForm.reset();
-      this.medicationInfoForm.reset();
-      this.adverseEffectInfoForm.reset();
-    },
-    error: async (error) => {
-      const detail = await this.parseServerError(error);
-      console.error('Error al crear efecto adverso:', error, '\nDetalle:', detail);
-      alert(`Error al registrar el efecto adverso\nStatus: ${error?.status}\n${detail}`);
+  // ---------- RESTRICCIONES DE ENTRADA PARA DPI ----------
+  onlyNumber(evt: KeyboardEvent): void {
+    const allowed = ['Backspace', 'Delete', 'ArrowLeft', 'ArrowRight', 'Tab'];
+    if (allowed.includes(evt.key)) return;
+    if (!/^\d$/.test(evt.key)) {
+      evt.preventDefault();
+      return;
     }
-  });
-}
+    const ctrl = this.patientInfoForm.get('dpi');
+    const value = (ctrl?.value ?? '').toString();
+    if (value.length >= 13) {
+      evt.preventDefault();
+    }
+  }
+
+  onDpiPaste(evt: ClipboardEvent): void {
+    const clip = evt.clipboardData?.getData('text') ?? '';
+    const digits = clip.replace(/\D+/g, '').slice(0, 13);
+    evt.preventDefault();
+    const ctrl = this.patientInfoForm.get('dpi');
+    ctrl?.setValue(digits);
+    ctrl?.markAsDirty();
+    ctrl?.markAsTouched();
+  }
+
+  onDpiInput(evt: Event): void {
+    const input = evt.target as HTMLInputElement;
+    const digits = input.value.replace(/\D+/g, '').slice(0, 13);
+    if (input.value !== digits) {
+      input.value = digits;
+      this.patientInfoForm.get('dpi')?.setValue(digits);
+    }
+  }
+
+  // ---------- SUBMIT ----------
+  async submitEffect(): Promise<void> {
+    this.patientInfoForm.markAllAsTouched();
+    this.medicationInfoForm.markAllAsTouched();
+    this.adverseEffectInfoForm.markAllAsTouched();
+
+    if (this.patientInfoForm.invalid || this.medicationInfoForm.invalid || this.adverseEffectInfoForm.invalid) {
+      Swal.fire({
+        title: 'Formulario incompleto',
+        text: 'Por favor, completa todos los campos requeridos.',
+        icon: 'warning',
+        confirmButtonText: 'Aceptar'
+      });
+      return;
+    }
+
+    const f1 = this.patientInfoForm.value;
+    const f2 = this.medicationInfoForm.value;
+    const f3 = this.adverseEffectInfoForm.value;
+
+    const dpi: string = String(f1.dpi ?? '').trim();
+    if (!/^\d{13}$/.test(dpi)) {
+      Swal.fire({
+        title: 'DPI inválido',
+        text: 'El DPI debe contener exactamente 13 dígitos.',
+        icon: 'warning',
+        confirmButtonText: 'Aceptar'
+      });
+      return;
+    }
+
+    const idMedicamento = Number(this.medicationInfoForm.value.id_medicamento);
+    if (!Number.isFinite(idMedicamento)) {
+      Swal.fire({
+        title: 'Medicamento inválido',
+        text: 'Selecciona un medicamento válido.',
+        icon: 'warning',
+        confirmButtonText: 'Aceptar'
+      });
+      return;
+    }
+
+    // === Payload ahora envía DPI (no idPaciente) ===
+    const payload: CrearEfectoAdversoPayload = {
+      dpi, // <-- enviar dpi al backend
+      idMedicamento,
+      fechaReporte: this.toISOReq(f3.fecha_reporte),
+      descripcion: (f3.descripcion ?? '').trim(),
+      gravedad: f3.gravedad ?? null,
+      lote: (f2.lote ?? '').trim(),
+      laboratorio: (f2.laboratorio ?? '').trim(),
+      registroSanitario: (f2.registro_sanitario ?? '').trim() || null,
+      fechaVencimiento: this.toISOReq(f2.fecha_vencimiento),
+      dosis: (f2.dosis ?? '').trim() || null,
+      fechaInicioEfecto: this.toISOOpt(f3.fecha_inicio_efecto),
+      fechaFinEfecto: this.toISOOpt(f3.fecha_fin_efecto),
+      viaAdministracion: f2.via_administracion || null,
+      medidasTomadas: (f3.medidas_tomadas ?? '').trim() || null,
+      suspension: this.toCharBool(f3.suspension),   // "S" | "N"
+      fechaSuspension: this.toISOOpt(f3.fecha_suspension),
+      ajusteDosis: this.toCharBool(f3.ajuste_dosis),// "S" | "N"
+      dosisActual: (f3.dosis_actual ?? '').trim() || null
+    } as any; // ajusta el tipo si tu modelo aún espera idPaciente
+
+    // Loading modal
+    Swal.fire({
+      title: 'Registrando...',
+      text: 'Por favor espera',
+      allowOutsideClick: false,
+      didOpen: () => Swal.showLoading()
+    });
+
+    this.efectoAdversoService.apiEfectoAdversoPost(payload as any).subscribe({
+      next: () => {
+        Swal.close();
+        Swal.fire({
+          title: '¡Creado!',
+          text: 'El efecto adverso ha sido registrado correctamente.',
+          icon: 'success',
+          confirmButtonText: 'Aceptar'
+        });
+        this.patientInfoForm.reset();
+        this.medicationInfoForm.reset();
+        this.adverseEffectInfoForm.reset();
+      },
+      error: async (error) => {
+        const detail = await this.parseServerError(error);
+
+        // Intentar extraer un mensaje amigable del detalle
+        let message = 'Ocurrió un error inesperado.';
+        try {
+          const parsed = JSON.parse(detail);
+          message = parsed?.message ?? message;
+        } catch {
+          message = /message":\s*"([^"]+)/.exec(detail)?.[1] || message;
+        }
+
+        Swal.close();
+        Swal.fire({
+          title: 'Error al registrar',
+          html: `<b>Status:</b> ${error?.status ?? '—'}<br><b>Detalle:</b> ${this.escapeHtml(message)}`,
+          icon: 'error',
+          confirmButtonText: 'Cerrar'
+        });
+        console.error('Error al crear efecto adverso:', error, '\nDetalle:', detail);
+      }
+    });
+  }
+
+  // Evitar inyección en el HTML del Swal
+  private escapeHtml(s: string): string {
+    return s.replace(/[&<>"']/g, m =>
+      ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[m] as string)
+    );
+  }
 }

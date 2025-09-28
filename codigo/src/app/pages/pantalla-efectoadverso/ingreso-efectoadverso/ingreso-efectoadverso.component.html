@@ -2,228 +2,269 @@
   <h2 class="form-title">Registrar Efecto Adverso</h2>
 
   <mat-horizontal-stepper [linear]="isLinear" #stepper>
-    <!-- Paso 1: Paciente -->
+
+    <!-- ===== Paso 1: Paciente (DPI) ===== -->
     <mat-step [stepControl]="patientInfoForm">
       <form [formGroup]="patientInfoForm">
         <ng-template matStepLabel>Información del Paciente</ng-template>
 
-        <mat-form-field appearance="fill" class="full-width">
-          <mat-label>ID del Paciente</mat-label>
-          <input matInput formControlName="id_paciente" type="number" />
-          <mat-error *ngIf="patientInfoForm.get('id_paciente')?.hasError('required') && patientInfoForm.get('id_paciente')?.touched">
-            Debes ingresar un ID de paciente
-          </mat-error>
-          <mat-error *ngIf="patientInfoForm.get('id_paciente')?.hasError('min') && patientInfoForm.get('id_paciente')?.touched">
-            El ID debe ser mayor a 0
-          </mat-error>
-        </mat-form-field>
+        <div class="form-grid">
+          <mat-form-field appearance="fill" class="full-width span-1">
+            <mat-label>DPI (13 dígitos)</mat-label>
+            <input
+              matInput
+              formControlName="dpi"
+              type="text"
+              inputmode="numeric"
+              maxlength="13"
+              (keypress)="onlyNumber($event)"
+              (paste)="onDpiPaste($event)"
+              (input)="onDpiInput($event)"
+              placeholder="Ej.: 1234567890123"
+            />
+            <mat-hint align="start">Solo números, 13 dígitos</mat-hint>
+            <mat-error *ngIf="patientInfoForm.get('dpi')?.hasError('required') && patientInfoForm.get('dpi')?.touched">
+              Debes ingresar el DPI.
+            </mat-error>
+            <mat-error *ngIf="patientInfoForm.get('dpi')?.hasError('pattern') && patientInfoForm.get('dpi')?.touched">
+              El DPI debe contener exactamente 13 dígitos.
+            </mat-error>
+          </mat-form-field>
+        </div>
 
-        <div>
+        <div class="actions">
           <button mat-raised-button color="primary" matStepperNext>Siguiente</button>
         </div>
       </form>
     </mat-step>
 
-    <!-- Paso 2: Medicamento -->
+    <!-- ===== Paso 2: Medicamento ===== -->
     <mat-step [stepControl]="medicationInfoForm">
       <form [formGroup]="medicationInfoForm">
         <ng-template matStepLabel>Información del Medicamento</ng-template>
 
-        <!-- Medicamento (versión simple, sin buscador que bloquee el click) -->
-        <mat-form-field appearance="fill" class="full-width">
-          <mat-label>Medicamento</mat-label>
-          <mat-select formControlName="id_medicamento" [disabled]="!medicamentos.length">
-            <mat-option *ngFor="let m of medicamentos; trackBy: trackMed" [value]="m.idMedicamento">
-              {{ m.nombre }}
-            </mat-option>
-          </mat-select>
-          <mat-error *ngIf="medicationInfoForm.get('id_medicamento')?.hasError('required')">
-            Debes seleccionar un medicamento válido
-          </mat-error>
-        </mat-form-field>
+        <div class="form-grid">
+          <!-- Medicamento -->
+          <mat-form-field appearance="fill" class="full-width span-1">
+            <mat-label>Medicamento</mat-label>
+            <mat-select formControlName="id_medicamento" [disabled]="!medicamentos.length">
+              <mat-option *ngFor="let m of medicamentos; trackBy: trackMed" [value]="m.idMedicamento">
+                {{ m.nombre }}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="medicationInfoForm.get('id_medicamento')?.hasError('required')">
+              Debes seleccionar un medicamento válido
+            </mat-error>
+          </mat-form-field>
 
-        <mat-form-field appearance="fill" class="full-width">
-          <mat-label>Dosis</mat-label>
-          <input matInput formControlName="dosis" />
-          <mat-error *ngIf="medicationInfoForm.get('dosis')?.hasError('required') && medicationInfoForm.get('dosis')?.touched">
-            La dosis es requerida
-          </mat-error>
-        </mat-form-field>
+          <!-- Dosis -->
+          <mat-form-field appearance="fill" class="full-width span-1">
+            <mat-label>Dosis</mat-label>
+            <input matInput formControlName="dosis" />
+            <mat-error *ngIf="medicationInfoForm.get('dosis')?.hasError('required') && medicationInfoForm.get('dosis')?.touched">
+              La dosis es requerida
+            </mat-error>
+          </mat-form-field>
 
-        <mat-form-field appearance="fill" class="full-width">
-          <mat-label>Lote</mat-label>
-          <input matInput formControlName="lote" />
-          <mat-error *ngIf="medicationInfoForm.get('lote')?.hasError('required') && medicationInfoForm.get('lote')?.touched">
-            El lote es requerido
-          </mat-error>
-        </mat-form-field>
+          <!-- Lote -->
+          <mat-form-field appearance="fill" class="full-width span-1">
+            <mat-label>Lote</mat-label>
+            <input matInput formControlName="lote" />
+            <mat-error *ngIf="medicationInfoForm.get('lote')?.hasError('required') && medicationInfoForm.get('lote')?.touched">
+              El lote es requerido
+            </mat-error>
+          </mat-form-field>
 
-        <mat-form-field appearance="fill" class="full-width">
-          <mat-label>Laboratorio</mat-label>
-          <input matInput formControlName="laboratorio" />
-          <mat-error *ngIf="medicationInfoForm.get('laboratorio')?.hasError('required') && medicationInfoForm.get('laboratorio')?.touched">
-            El laboratorio es requerido
-          </mat-error>
-        </mat-form-field>
+          <!-- Laboratorio -->
+          <mat-form-field appearance="fill" class="full-width span-1">
+            <mat-label>Laboratorio</mat-label>
+            <input matInput formControlName="laboratorio" />
+            <mat-error *ngIf="medicationInfoForm.get('laboratorio')?.hasError('required') && medicationInfoForm.get('laboratorio')?.touched">
+              El laboratorio es requerido
+            </mat-error>
+          </mat-form-field>
 
-        <mat-form-field appearance="fill" class="full-width">
-          <mat-label>Registro Sanitario</mat-label>
-          <input matInput formControlName="registro_sanitario" />
-          <mat-error *ngIf="medicationInfoForm.get('registro_sanitario')?.hasError('required') && medicationInfoForm.get('registro_sanitario')?.touched">
-            El registro sanitario es requerido
-          </mat-error>
-        </mat-form-field>
+          <!-- Registro sanitario -->
+          <mat-form-field appearance="fill" class="full-width span-1">
+            <mat-label>Registro Sanitario</mat-label>
+            <input matInput formControlName="registro_sanitario" />
+            <mat-error *ngIf="medicationInfoForm.get('registro_sanitario')?.hasError('required') && medicationInfoForm.get('registro_sanitario')?.touched">
+              El registro sanitario es requerido
+            </mat-error>
+          </mat-form-field>
 
-        <!-- Fecha de Vencimiento (>= hoy) -->
-        <mat-form-field appearance="fill" class="full-width">
-          <mat-label>Fecha de Vencimiento</mat-label>
-          <input matInput [matDatepicker]="pickerVenc"
-                 formControlName="fecha_vencimiento"
-                 [min]="today"
-                 placeholder="dd/mm/aaaa">
-          <mat-datepicker-toggle matSuffix [for]="pickerVenc"></mat-datepicker-toggle>
-          <mat-datepicker #pickerVenc></mat-datepicker>
-          <mat-error *ngIf="medicationInfoForm.get('fecha_vencimiento')?.hasError('required') && medicationInfoForm.get('fecha_vencimiento')?.touched">
-            Debes ingresar una fecha de vencimiento
-          </mat-error>
-          <mat-error *ngIf="medicationInfoForm.get('fecha_vencimiento')?.hasError('minDate')">
-            La fecha de vencimiento no puede ser anterior a hoy
-          </mat-error>
-        </mat-form-field>
+          <!-- Fecha de vencimiento (>= hoy) -->
+          <mat-form-field appearance="fill" class="full-width span-1">
+            <mat-label>Fecha de Vencimiento</mat-label>
+            <input
+              matInput
+              [matDatepicker]="pickerVenc"
+              formControlName="fecha_vencimiento"
+              [min]="today"
+              placeholder="dd/mm/aaaa"
+            />
+            <mat-datepicker-toggle matSuffix [for]="pickerVenc"></mat-datepicker-toggle>
+            <mat-datepicker #pickerVenc></mat-datepicker>
+            <mat-error *ngIf="medicationInfoForm.get('fecha_vencimiento')?.hasError('required') && medicationInfoForm.get('fecha_vencimiento')?.touched">
+              Debes ingresar una fecha de vencimiento
+            </mat-error>
+            <mat-error *ngIf="medicationInfoForm.get('fecha_vencimiento')?.hasError('minDate')">
+              La fecha de vencimiento no puede ser anterior a hoy
+            </mat-error>
+          </mat-form-field>
 
-        <mat-form-field appearance="fill" class="full-width">
-          <mat-label>Vía de Administración</mat-label>
-          <mat-select formControlName="via_administracion">
-            <mat-option value="Oral">Oral</mat-option>
-            <mat-option value="Intravenosa">Intravenosa</mat-option>
-            <mat-option value="Intramuscular">Intramuscular</mat-option>
-            <mat-option value="Subcutánea">Subcutánea</mat-option>
-            <mat-option value="Transdérmica">Transdérmica</mat-option>
-            <mat-option value="Inhalatoria">Inhalatoria</mat-option>
-            <mat-option value="Rectal">Rectal</mat-option>
-            <mat-option value="Sublingual">Sublingual</mat-option>
-            <mat-option value="Intradérmica">Intradérmica</mat-option>
-            <mat-option value="Oftálmica">Oftálmica</mat-option>
-            <mat-option value="Otológica">Otológica</mat-option>
-            <mat-option value="Nasal">Nasal</mat-option>
-            <mat-option value="Intraperitoneal">Intraperitoneal</mat-option>
-            <mat-option value="Tópica">Tópica</mat-option>
-          </mat-select>
-          <mat-error *ngIf="medicationInfoForm.get('via_administracion')?.hasError('required') && medicationInfoForm.get('via_administracion')?.touched">
-            La vía de administración es requerida
-          </mat-error>
-        </mat-form-field>
+          <!-- Vía de administración (a lo ancho) -->
+          <mat-form-field appearance="fill" class="full-width span-2">
+            <mat-label>Vía de Administración</mat-label>
+            <mat-select formControlName="via_administracion">
+              <mat-option value="Oral">Oral</mat-option>
+              <mat-option value="Intravenosa">Intravenosa</mat-option>
+              <mat-option value="Intramuscular">Intramuscular</mat-option>
+              <mat-option value="Subcutánea">Subcutánea</mat-option>
+              <mat-option value="Transdérmica">Transdérmica</mat-option>
+              <mat-option value="Inhalatoria">Inhalatoria</mat-option>
+              <mat-option value="Rectal">Rectal</mat-option>
+              <mat-option value="Sublingual">Sublingual</mat-option>
+              <mat-option value="Intradérmica">Intradérmica</mat-option>
+              <mat-option value="Oftálmica">Oftálmica</mat-option>
+              <mat-option value="Otológica">Otológica</mat-option>
+              <mat-option value="Nasal">Nasal</mat-option>
+              <mat-option value="Intraperitoneal">Intraperitoneal</mat-option>
+              <mat-option value="Tópica">Tópica</mat-option>
+            </mat-select>
+            <mat-error *ngIf="medicationInfoForm.get('via_administracion')?.hasError('required') && medicationInfoForm.get('via_administracion')?.touched">
+              La vía de administración es requerida
+            </mat-error>
+          </mat-form-field>
+        </div>
 
-        <div>
+        <div class="actions">
           <button mat-raised-button color="primary" matStepperPrevious>Anterior</button>
           <button mat-raised-button color="primary" matStepperNext>Siguiente</button>
         </div>
       </form>
     </mat-step>
 
-    <!-- Paso 3: Efecto Adverso -->
+    <!-- ===== Paso 3: Efecto Adverso ===== -->
     <mat-step [stepControl]="adverseEffectInfoForm">
       <form [formGroup]="adverseEffectInfoForm">
         <ng-template matStepLabel>Información del Efecto Adverso</ng-template>
 
-        <!-- Reporte (<= hoy) -->
-        <mat-form-field appearance="fill" class="full-width">
-          <mat-label>Fecha de Reporte</mat-label>
-          <input matInput [matDatepicker]="pickerRep"
-                 formControlName="fecha_reporte"
-                 [max]="today"
-                 placeholder="dd/mm/aaaa">
-          <mat-datepicker-toggle matSuffix [for]="pickerRep"></mat-datepicker-toggle>
-          <mat-datepicker #pickerRep></mat-datepicker>
-          <mat-error *ngIf="adverseEffectInfoForm.get('fecha_reporte')?.hasError('required') && adverseEffectInfoForm.get('fecha_reporte')?.touched">
-            Debes ingresar una fecha válida
-          </mat-error>
-          <mat-error *ngIf="adverseEffectInfoForm.get('fecha_reporte')?.hasError('maxDate')">
-            La fecha de reporte no puede ser posterior a hoy
-          </mat-error>
-        </mat-form-field>
+        <div class="form-grid">
+          <!-- Fecha reporte -->
+          <mat-form-field appearance="fill" class="full-width span-1">
+            <mat-label>Fecha de Reporte</mat-label>
+            <input
+              matInput
+              [matDatepicker]="pickerRep"
+              formControlName="fecha_reporte"
+              [max]="today"
+              placeholder="dd/mm/aaaa"
+            />
+            <mat-datepicker-toggle matSuffix [for]="pickerRep"></mat-datepicker-toggle>
+            <mat-datepicker #pickerRep></mat-datepicker>
+            <mat-error *ngIf="adverseEffectInfoForm.get('fecha_reporte')?.hasError('required') && adverseEffectInfoForm.get('fecha_reporte')?.touched">
+              Debes ingresar una fecha válida
+            </mat-error>
+            <mat-error *ngIf="adverseEffectInfoForm.get('fecha_reporte')?.hasError('maxDate')">
+              La fecha de reporte no puede ser posterior a hoy
+            </mat-error>
+          </mat-form-field>
 
-        <!-- Descripción -->
-        <mat-form-field appearance="fill" class="full-width">
-          <mat-label>Descripción</mat-label>
-          <textarea matInput formControlName="descripcion"></textarea>
-          <mat-error *ngIf="adverseEffectInfoForm.get('descripcion')?.hasError('required') && adverseEffectInfoForm.get('descripcion')?.touched">
-            La descripción es requerida
-          </mat-error>
-        </mat-form-field>
+          <!-- Gravedad -->
+          <mat-form-field appearance="fill" class="full-width span-1">
+            <mat-label>Gravedad</mat-label>
+            <mat-select formControlName="gravedad">
+              <mat-option value="Leve">Leve</mat-option>
+              <mat-option value="Moderada">Moderada</mat-option>
+              <mat-option value="Grave">Grave</mat-option>
+              <mat-option value="Mortal">Mortal</mat-option>
+            </mat-select>
+            <mat-error *ngIf="adverseEffectInfoForm.get('gravedad')?.hasError('required') && adverseEffectInfoForm.get('gravedad')?.touched">
+              La gravedad es requerida
+            </mat-error>
+          </mat-form-field>
 
-        <!-- Gravedad -->
-        <mat-form-field appearance="fill" class="full-width">
-          <mat-label>Gravedad</mat-label>
-          <mat-select formControlName="gravedad">
-            <mat-option value="Leve">Leve</mat-option>
-            <mat-option value="Moderada">Moderada</mat-option>
-            <mat-option value="Grave">Grave</mat-option>
-            <mat-option value="Mortal">Mortal</mat-option>
-          </mat-select>
-          <mat-error *ngIf="adverseEffectInfoForm.get('gravedad')?.hasError('required') && adverseEffectInfoForm.get('gravedad')?.touched">
-            La gravedad es requerida
-          </mat-error>
-        </mat-form-field>
+          <!-- Descripción (ancho completo) -->
+          <mat-form-field appearance="fill" class="full-width span-2">
+            <mat-label>Descripción</mat-label>
+            <textarea matInput formControlName="descripcion"></textarea>
+            <mat-error *ngIf="adverseEffectInfoForm.get('descripcion')?.hasError('required') && adverseEffectInfoForm.get('descripcion')?.touched">
+              La descripción es requerida
+            </mat-error>
+          </mat-form-field>
 
-        <!-- Inicio -->
-        <mat-form-field appearance="fill" class="full-width">
-          <mat-label>Fecha de Inicio del Efecto</mat-label>
-          <input matInput [matDatepicker]="pickerIni"
-                 formControlName="fecha_inicio_efecto"
-                 placeholder="dd/mm/aaaa">
-          <mat-datepicker-toggle matSuffix [for]="pickerIni"></mat-datepicker-toggle>
-          <mat-datepicker #pickerIni></mat-datepicker>
-          <mat-error *ngIf="adverseEffectInfoForm.get('fecha_inicio_efecto')?.hasError('required') && adverseEffectInfoForm.get('fecha_inicio_efecto')?.touched">
-            Debes ingresar una fecha válida
-          </mat-error>
-        </mat-form-field>
+          <!-- Inicio -->
+          <mat-form-field appearance="fill" class="full-width span-1">
+            <mat-label>Fecha de Inicio del Efecto</mat-label>
+            <input
+              matInput
+              [matDatepicker]="pickerIni"
+              formControlName="fecha_inicio_efecto"
+              placeholder="dd/mm/aaaa"
+            />
+            <mat-datepicker-toggle matSuffix [for]="pickerIni"></mat-datepicker-toggle>
+            <mat-datepicker #pickerIni></mat-datepicker>
+            <mat-error *ngIf="adverseEffectInfoForm.get('fecha_inicio_efecto')?.hasError('required') && adverseEffectInfoForm.get('fecha_inicio_efecto')?.touched">
+              Debes ingresar una fecha válida
+            </mat-error>
+          </mat-form-field>
 
-        <!-- Fin (min: inicio) -->
-        <mat-form-field appearance="fill" class="full-width">
-          <mat-label>Fecha de Fin del Efecto</mat-label>
-          <input matInput [matDatepicker]="pickerFin"
-                 formControlName="fecha_fin_efecto"
-                 [min]="minFinEfecto"
-                 placeholder="dd/mm/aaaa">
-          <mat-datepicker-toggle matSuffix [for]="pickerFin"></mat-datepicker-toggle>
-          <mat-datepicker #pickerFin></mat-datepicker>
-          <mat-error *ngIf="adverseEffectInfoForm.hasError('finMenorQueInicio') || adverseEffectInfoForm.get('fecha_fin_efecto')?.hasError('finMenorQueInicio')">
-            La fecha de fin no puede ser anterior a la fecha de inicio
-          </mat-error>
-        </mat-form-field>
+          <!-- Fin -->
+          <mat-form-field appearance="fill" class="full-width span-1">
+            <mat-label>Fecha de Fin del Efecto</mat-label>
+            <input
+              matInput
+              [matDatepicker]="pickerFin"
+              formControlName="fecha_fin_efecto"
+              [min]="minFinEfecto"
+              placeholder="dd/mm/aaaa"
+            />
+            <mat-datepicker-toggle matSuffix [for]="pickerFin"></mat-datepicker-toggle>
+            <mat-datepicker #pickerFin></mat-datepicker>
+            <mat-error *ngIf="adverseEffectInfoForm.hasError('finMenorQueInicio') || adverseEffectInfoForm.get('fecha_fin_efecto')?.hasError('finMenorQueInicio')">
+              La fecha de fin no puede ser anterior a la fecha de inicio
+            </mat-error>
+          </mat-form-field>
 
-        <mat-form-field appearance="fill" class="full-width">
-          <mat-label>Medidas Tomadas</mat-label>
-          <textarea matInput formControlName="medidas_tomadas"></textarea>
-          <mat-error *ngIf="adverseEffectInfoForm.get('medidas_tomadas')?.hasError('required') && adverseEffectInfoForm.get('medidas_tomadas')?.touched">
-            Las medidas tomadas son requeridas
-          </mat-error>
-        </mat-form-field>
+          <!-- Medidas (ancho completo) -->
+          <mat-form-field appearance="fill" class="full-width span-2">
+            <mat-label>Medidas Tomadas</mat-label>
+            <textarea matInput formControlName="medidas_tomadas"></textarea>
+            <mat-error *ngIf="adverseEffectInfoForm.get('medidas_tomadas')?.hasError('required') && adverseEffectInfoForm.get('medidas_tomadas')?.touched">
+              Las medidas tomadas son requeridas
+            </mat-error>
+          </mat-form-field>
 
-        <mat-checkbox formControlName="suspension">Suspensión</mat-checkbox>
+          <!-- Suspensión + Fecha suspensión en línea -->
+          <mat-checkbox formControlName="suspension" class="span-1 chk">Suspensión</mat-checkbox>
 
-        <!-- Suspensión (opcional, min: inicio) -->
-        <mat-form-field appearance="fill" class="full-width">
-          <mat-label>Fecha de Suspensión</mat-label>
-          <input matInput [matDatepicker]="pickerSusp"
-                 formControlName="fecha_suspension"
-                 [min]="minFinEfecto"
-                 placeholder="dd/mm/aaaa">
-          <mat-datepicker-toggle matSuffix [for]="pickerSusp"></mat-datepicker-toggle>
-          <mat-datepicker #pickerSusp></mat-datepicker>
-          <mat-error *ngIf="adverseEffectInfoForm.hasError('suspMenorQueInicio') || adverseEffectInfoForm.get('fecha_suspension')?.hasError('suspMenorQueInicio')">
-            La fecha de suspensión no puede ser anterior a la fecha de inicio
-          </mat-error>
-        </mat-form-field>
+          <mat-form-field appearance="fill" class="full-width span-1">
+            <mat-label>Fecha de Suspensión</mat-label>
+            <input
+              matInput
+              [matDatepicker]="pickerSusp"
+              formControlName="fecha_suspension"
+              [min]="minFinEfecto"
+              placeholder="dd/mm/aaaa"
+            />
+            <mat-datepicker-toggle matSuffix [for]="pickerSusp"></mat-datepicker-toggle>
+            <mat-datepicker #pickerSusp></mat-datepicker>
+            <mat-error *ngIf="adverseEffectInfoForm.hasError('suspMenorQueInicio') || adverseEffectInfoForm.get('fecha_suspension')?.hasError('suspMenorQueInicio')">
+              La fecha de suspensión no puede ser anterior a la fecha de inicio
+            </mat-error>
+          </mat-form-field>
 
-        <mat-checkbox formControlName="ajuste_dosis">Ajuste de Dosis</mat-checkbox>
-        <mat-form-field appearance="fill" class="full-width">
-          <mat-label>Dosis Actual</mat-label>
-          <input matInput formControlName="dosis_actual" />
-        </mat-form-field>
+          <!-- Ajuste + Dosis actual en línea -->
+          <mat-checkbox formControlName="ajuste_dosis" class="span-1 chk">Ajuste de Dosis</mat-checkbox>
 
-        <div>
+          <mat-form-field appearance="fill" class="full-width span-1">
+            <mat-label>Dosis Actual</mat-label>
+            <input matInput formControlName="dosis_actual" />
+          </mat-form-field>
+        </div>
+
+        <div class="actions">
           <button mat-raised-button color="primary" matStepperPrevious>Anterior</button>
           <button mat-raised-button color="primary" type="button" (click)="submitEffect()">
             Registrar
@@ -231,5 +272,6 @@
         </div>
       </form>
     </mat-step>
+
   </mat-horizontal-stepper>
 </mat-card>

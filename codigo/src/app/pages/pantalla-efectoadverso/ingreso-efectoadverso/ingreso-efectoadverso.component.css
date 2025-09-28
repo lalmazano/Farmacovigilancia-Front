@@ -1,0 +1,57 @@
+/* Contenedor general */
+.effect-card {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+/* Grilla responsiva del paso 3 */
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr;   /* móvil: 1 columna */
+  gap: 12px;
+  align-items: start;
+}
+
+/* Asegura campos al 100% */
+.full-width,
+.full-width .mat-mdc-form-field,
+.full-width .mat-form-field {
+  width: 100%;
+}
+
+/* Checkboxes alineados con inputs */
+.chk {
+  display: flex;
+  align-items: center;
+  padding: 8px 0;
+}
+
+/* Acciones al final */
+.actions {
+  margin-top: 12px;
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+}
+
+/* ≥768px: 2 columnas; algunos elementos pueden ocupar 2 */
+@media (min-width: 768px) {
+  .form-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .span-2 {
+    grid-column: span 2;
+  }
+  .span-1 {
+    grid-column: span 1;
+  }
+}
+
+/* (Opcional) ≥1200px: si quieres 3 columnas, descomenta
+@media (min-width: 1200px) {
+  .form-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .span-2 { grid-column: span 2; }
+}
+*/
