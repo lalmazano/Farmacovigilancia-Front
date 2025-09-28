@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { EfectoAdverso } from 'Servicios/model/efectoAdverso';
+import { EfectoAdverso } from './../../../services/api/model/efectoAdverso';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { EfectoAdversoService } from 'src/app/services/api';
