@@ -20,4 +20,6 @@ export * from './userRol.service';
 import { UserRolService } from './userRol.service';
 export * from './usuarios.service';
 import { UsuariosService } from './usuarios.service';
+export * from './reportes.service';
+import { ReportesService } from './reportes.service';
 export const APIS = [APIService, DetalleRecetaService, EfectoAdversoService, HistorialMedicoService, LoginService, MedicamentoService, PacienteService, RecetaService, RolService, UserRolService, UsuariosService];

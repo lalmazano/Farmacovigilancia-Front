@@ -23,7 +23,6 @@ import { CreacionRolComponent } from './pantalla-admin/pantalla-roles/creacion/C
 import { modificacionrolComponent } from './pantalla-admin/pantalla-roles/modificacion/modificacionRol.component';
 import { PantallaFarmacoComponent } from './pantalla-farmaco/pantalla-farmaco.component';
 import { PantallaMedicoComponent } from './pantalla-medico/pantalla-medico.component';
-import { PantallaReportesComponent } from './pantalla-reportes/pantalla-reportes.component';
 import { DashboardComponent } from './pantalla-farmaco/dashboard/dashboard.component';
 import { MenuFarmacoComponent } from './pantalla-farmaco/menu-farmaco/menu-farmaco.component';
 import { MenuMedicoComponent } from './pantalla-medico/menu-medico/menu-medico.component';
@@ -40,6 +39,8 @@ import { PacientesComponent } from './pantalla-medico/pacientes/pacientes.compon
 import { ListarPacienteComponent } from './pantalla-medico/pacientes/listar-paciente/listar-paciente.component';
 import { CrearPacienteComponent } from './pantalla-medico/pacientes/crear-paciente/crear-paciente.component';
 import { ModificarPacienteComponent } from './pantalla-medico/pacientes/modificar-paciente/modificar-paciente.component';
+import { VisorReportComponent } from './pantalla-reportes/VisorReport/VisorReport.component';
+import { PantallaReportesComponent } from './pantalla-reportes/pantalla-reportes.component';
 
 @NgModule({
   declarations: [
@@ -61,7 +62,7 @@ import { ModificarPacienteComponent } from './pantalla-medico/pacientes/modifica
     modificacionrolComponent,
     PantallaFarmacoComponent,
     PantallaMedicoComponent,
-    PantallaReportesComponent,
+    VisorReportComponent,
     DashboardComponent,
     DashboardMedicoComponent,
     MenuFarmacoComponent,
@@ -77,7 +78,8 @@ import { ModificarPacienteComponent } from './pantalla-medico/pacientes/modifica
     PacientesComponent,
     ListarPacienteComponent,
     CrearPacienteComponent,
-    ModificarPacienteComponent
+    ModificarPacienteComponent,
+    PantallaReportesComponent,
 
   ],
 

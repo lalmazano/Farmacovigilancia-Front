@@ -1,4 +1,12 @@
-<div class="app-wrapper">
-  <app-title [title]="'REPORTES'" [icon]="'reports'"></app-title>
-  <router-outlet></router-outlet>
+
+<app-title [title]="'Reportes'" [icon]="'assessment'"></app-title>
+
+<div class="main-content">
+  <div class="card-grid">
+    <mat-card class="card" *ngFor="let item of items" (click)="onItemClick(item)" tabindex="0" role="button">
+      <img mat-card-image [src]="item.imgSrc" [alt]="item.imgAlt" />
+      <mat-card-title>{{ item.title }}</mat-card-title>
+      <mat-card-subtitle *ngIf="item.description">{{ item.description }}</mat-card-subtitle>
+    </mat-card>
+  </div>
 </div>

@@ -1,0 +1,17 @@
+<h2 mat-dialog-title>
+  Reporte de Usuarios GitLab
+  <button mat-icon-button mat-dialog-close style="float: right;">
+    <mat-icon>close</mat-icon>
+  </button>
+</h2>
+
+<mat-dialog-content class="viewer-container">
+<object [data]="pdfSrc" type="application/pdf" width="100%" height="100%" justify-content="center">
+  <p>Tu navegador no puede mostrar PDFs. <a [href]="pdfSrc">Descargar</a>.</p>
+</object>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Cerrar</button>
+  <button mat-raised-button color="primary" (click)="descargarPDF()">Descargar</button>
+</mat-dialog-actions>
