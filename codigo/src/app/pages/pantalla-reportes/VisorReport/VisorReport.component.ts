@@ -27,7 +27,7 @@ export class VisorReportComponent implements OnInit {
 
     const a = document.createElement('a');
     a.href = url;
-    a.download = 'ReporteGitlab.pdf';
+    a.download = 'Reporte.pdf';
     a.click();
 
     window.URL.revokeObjectURL(url);

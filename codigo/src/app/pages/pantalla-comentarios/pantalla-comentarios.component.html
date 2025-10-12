@@ -1,0 +1,17 @@
+<div class="app-wrapper">
+  <app-title [title]="'Sección de Comentarios'" [icon]="'chat'"></app-title>
+  
+    <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 60vh;">
+      <p style="font-size: 1.1rem; color: #555; margin-bottom: 24px; text-align: center;">
+        Agradecemos tus comentarios y sugerencias para mejorar nuestro servicio.<br>
+        Puedes enviarnos tus opiniones a través del siguiente formulario:
+      </p>
+      <div style="display: flex; align-items: center; gap: 16px;">
+        
+        <button mat-raised-button color="primary" style="height: 40px; background-color: #a3c93a; color: white;" (click)="abrirQr()">
+          <mat-icon>qr_code</mat-icon>
+          Comentar vía QR
+        </button>
+      </div>
+    </div>
+</div>

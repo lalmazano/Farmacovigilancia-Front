@@ -47,11 +47,60 @@
   }
 }
 
-/* (Opcional) ≥1200px: si quieres 3 columnas, descomenta
-@media (min-width: 1200px) {
-  .form-grid {
-    grid-template-columns: repeat(3, 1fr);
+
+.help-footer {
+  margin-top: 2rem;
+  padding: 0 16px;
+
+  .help-card {
+    background-color: #fafafa;
+    border: none;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
   }
-  .span-2 { grid-column: span 2; }
+
+  .help-content {
+    display: flex;
+    align-items: center;
+    padding: 8px;
+  }
+
+  .help-icon {
+    margin-right: 16px;
+
+    mat-icon {
+      font-size: 24px;
+      width: 24px;
+      height: 24px;
+    }
+  }
+
+  .help-text {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    color: rgba(0,0,0,0.87);
+
+    span {
+      font-size: 14px;
+    }
+  }
+
+  .help-link {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    color: #3f51b5;
+    text-decoration: none;
+    font-size: 14px;
+    
+    &:hover {
+      text-decoration: underline;
+    }
+
+    mat-icon {
+      font-size: 18px;
+      width: 18px;
+      height: 18px;
+    }
+  }
 }
-*/

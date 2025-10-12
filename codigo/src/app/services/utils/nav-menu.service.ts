@@ -14,9 +14,9 @@ export class NavMenuService {
     this.nav_list.push(new NavItemModel(1, 'Administracion', '/pantalla-admin', [Roles.administrador], 'admin_panel_settings'));
     this.nav_list.push(new NavItemModel(2, 'Famacologia', '/pantalla-farmaco', [Roles.administrador, Roles.Farmaco], 'science'));
     this.nav_list.push(new NavItemModel(3, 'Medicos', '/pantalla-medico', [Roles.administrador, Roles.Medico], 'medical_services'));    
-    this.nav_list.push(new NavItemModel(4, 'Historial', '/Historial', [Roles.administrador, Roles.Medico, Roles.Farmaco], 'history'));
-    this.nav_list.push(new NavItemModel(5, 'Reportes', '/pantalla-reportes', [Roles.administrador, Roles.Medico, Roles.Farmaco], 'reports'));
-    
+    //this.nav_list.push(new NavItemModel(4, 'Historial', '/Historial', [Roles.administrador, Roles.Medico, Roles.Farmaco], 'history'));
+    this.nav_list.push(new NavItemModel(4, 'Reportes', '/pantalla-reportes', [Roles.administrador, Roles.Medico, Roles.Farmaco, Roles.Reporte], 'reports'));
+    this.nav_list.push(new NavItemModel(5, 'Comentarios', '/pantalla-comentarios', [Roles.administrador, Roles.Medico, Roles.Farmaco,Roles.Reporte], 'chat  '));
   }
 
   public getAllItems(): NavItemModel[] {

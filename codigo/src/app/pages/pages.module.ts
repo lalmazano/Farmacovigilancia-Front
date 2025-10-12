@@ -41,6 +41,7 @@ import { CrearPacienteComponent } from './pantalla-medico/pacientes/crear-pacien
 import { ModificarPacienteComponent } from './pantalla-medico/pacientes/modificar-paciente/modificar-paciente.component';
 import { VisorReportComponent } from './pantalla-reportes/VisorReport/VisorReport.component';
 import { PantallaReportesComponent } from './pantalla-reportes/pantalla-reportes.component';
+import { PantallaComentariosComponent } from './pantalla-comentarios/pantalla-comentarios.component';
 
 @NgModule({
   declarations: [
@@ -80,7 +81,7 @@ import { PantallaReportesComponent } from './pantalla-reportes/pantalla-reportes
     CrearPacienteComponent,
     ModificarPacienteComponent,
     PantallaReportesComponent,
-
+    PantallaComentariosComponent
   ],
 
   imports: [

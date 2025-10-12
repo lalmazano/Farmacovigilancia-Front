@@ -7,7 +7,7 @@ import { AuthenticacionService } from '../services/utils/authenticacion.service'
 @Injectable({
   providedIn: 'root',
 })
-export class UsuarioGuard  {
+export class ReporteGuard  {
 
     public user: UserModel
 
@@ -19,7 +19,7 @@ export class UsuarioGuard  {
   }
 
   canActivate(_next: ActivatedRouteSnapshot, _state: RouterStateSnapshot) {    
-    if (this.user.roles.indexOf(Roles.manejoUsuarios) < 0) {
+    if (this.user.roles.indexOf(Roles.Reporte) < 0) {
       this._router.navigateByUrl('/access-denied');
       return false;
     }

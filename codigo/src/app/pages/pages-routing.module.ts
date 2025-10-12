@@ -24,11 +24,11 @@ import { MenuFarmacoComponent } from './pantalla-farmaco/menu-farmaco/menu-farma
 import { MenuMedicoComponent } from './pantalla-medico/menu-medico/menu-medico.component';
 import { DashboardMedicoComponent } from './pantalla-medico/dashboard/dashboardmedico.component';
 import { MedicamentoComponent } from './pantalla-admin/pantalla-catalogo/medicamento/medicamento.component';
-import { ListarMedicamentoComponent } from './pantalla-admin/pantalla-catalogo/medicamento/listar-medicamento/listar-medicamento.component';
 import { MedicamentoFarmacoComponent } from './pantalla-farmaco/medicamento/medicamento-farmaco.component';
 import { EfectosAdversosFarmacoComponent } from './pantalla-farmaco/efectos-adversos/efectos-adversos.component';
 import { EfectosAdversosMedicoComponent } from './pantalla-medico/efectos-adversos/efectos-adversos.component';
 import { PacientesComponent } from './pantalla-medico/pacientes/pacientes.component';
+import { PantallaComentariosComponent } from './pantalla-comentarios/pantalla-comentarios.component';
 
 const routes: Routes = [
   {
@@ -166,6 +166,13 @@ const routes: Routes = [
       {
         path: 'pantalla-reportes',
         component: PantallaReportesComponent,
+        children: [
+          { path: '', redirectTo: '', pathMatch: 'full' },
+        ]
+      },
+      {
+        path: 'pantalla-comentarios',
+        component: PantallaComentariosComponent,
         children: [
           { path: '', redirectTo: '', pathMatch: 'full' },
         ]
