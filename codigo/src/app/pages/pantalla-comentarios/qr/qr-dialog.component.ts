@@ -6,6 +6,6 @@ import { Component } from '@angular/core';
 })
 export class QrDialogComponent {
   irAUrl() {
-    window.open('https://tu-link-de-qr.com', '_blank');
+    window.open('https://forms.gle/wrp5VctTNpghbEBJ8', '_blank');
   }
 }
