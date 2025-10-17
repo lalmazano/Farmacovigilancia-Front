@@ -236,32 +236,49 @@
             </mat-error>
           </mat-form-field>
 
-          <!-- Suspensión + Fecha suspensión en línea -->
-          <mat-checkbox formControlName="suspension" class="span-1 chk">Suspensión</mat-checkbox>
+<!-- Suspensión + Fecha suspensión en línea -->
+<mat-checkbox formControlName="suspension" class="span-1 chk">
+  Suspensión
+</mat-checkbox>
 
-          <mat-form-field appearance="fill" class="full-width span-1">
-            <mat-label>Fecha de Suspensión</mat-label>
-            <input
-              matInput
-              [matDatepicker]="pickerSusp"
-              formControlName="fecha_suspension"
-              [min]="minFinEfecto"
-              placeholder="dd/mm/aaaa"
-            />
-            <mat-datepicker-toggle matSuffix [for]="pickerSusp"></mat-datepicker-toggle>
-            <mat-datepicker #pickerSusp></mat-datepicker>
-            <mat-error *ngIf="adverseEffectInfoForm.hasError('suspMenorQueInicio') || adverseEffectInfoForm.get('fecha_suspension')?.hasError('suspMenorQueInicio')">
-              La fecha de suspensión no puede ser anterior a la fecha de inicio
-            </mat-error>
-          </mat-form-field>
+<mat-form-field
+  *ngIf="adverseEffectInfoForm.get('suspension')?.value"
+  appearance="fill"
+  class="full-width span-1"
+>
+  <mat-label>Fecha de Suspensión</mat-label>
+  <input
+    matInput
+    [matDatepicker]="pickerSusp"
+    formControlName="fecha_suspension"
+    [min]="minFinEfecto"
+    placeholder="dd/mm/aaaa"
+  />
+  <mat-datepicker-toggle matSuffix [for]="pickerSusp"></mat-datepicker-toggle>
+  <mat-datepicker #pickerSusp></mat-datepicker>
+  <mat-error
+    *ngIf="
+      adverseEffectInfoForm.hasError('suspMenorQueInicio') ||
+      adverseEffectInfoForm.get('fecha_suspension')?.hasError('suspMenorQueInicio')
+    "
+  >
+    La fecha de suspensión no puede ser anterior a la fecha de inicio
+  </mat-error>
+</mat-form-field>
 
-          <!-- Ajuste + Dosis actual en línea -->
-          <mat-checkbox formControlName="ajuste_dosis" class="span-1 chk">Ajuste de Dosis</mat-checkbox>
+<!-- Ajuste + Dosis actual en línea -->
+<mat-checkbox formControlName="ajuste_dosis" class="span-1 chk">
+  Ajuste de Dosis
+</mat-checkbox>
 
-          <mat-form-field appearance="fill" class="full-width span-1">
-            <mat-label>Dosis Actual</mat-label>
-            <input matInput formControlName="dosis_actual" />
-          </mat-form-field>
+<mat-form-field
+  *ngIf="adverseEffectInfoForm.get('ajuste_dosis')?.value"
+  appearance="fill"
+  class="full-width span-1"
+>
+  <mat-label>Dosis Actual</mat-label>
+  <input matInput formControlName="dosis_actual" />
+</mat-form-field>
         </div>
 
         <div class="actions">
